@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>capybot</name>
+  <version>0.0.0</version>
+  <description>The capybot package</description>
+
+  <author email="zach.inbox@gmail.com">Zach Anderson</author>
+  <maintainer email="zach.inbox@gmail.com">Zach Anderson</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>capybot_launch</run_depend>
+  <run_depend>capybot_description</run_depend>
+  <run_depend>capybot_driver</run_depend>
+
+  <export>
+      <catkin_metapackage></catkin_metapackage>
+  </export>
+</package>

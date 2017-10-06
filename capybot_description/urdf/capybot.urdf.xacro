@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot name="capybot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find capybot_description)/urdf/macros.xacro" />
+    
+    <!-- Start parameters -->
+    <xacro:property name="BODY_LENGTH"     value="0.250" />
+    <xacro:property name="BODY_WIDTH"      value="0.150" />
+    <xacro:property name="BODY_HEIGHT"     value="0.050" />
+    <xacro:property name="BODY_MASS"       value="0.500" />
+
+    <xacro:property name="WHEEL_DIAMETER"  value="0.110" />
+    <xacro:property name="WHEEL_THICKNESS" value="0.020" />
+    <xacro:property name="WHEEL_MASS"      value="0.150" />
+
+    <xacro:property name="LASER_SIZE" value="0.020" />
+    <xacro:property name="LASER_MASS" value="0.100" />
+    <!-- End parameters -->
+
+    <!-- Start links -->
+    <xacro:box_link name="base_link" x="${BODY_LENGTH}" y="${BODY_WIDTH}" z="${BODY_HEIGHT}" m="${BODY_MASS}"/>
+
+    <xacro:wheel name="front_left_wheel" diameter="${WHEEL_DIAMETER}"  thickness="${WHEEL_THICKNESS}"/>
+    <xacro:wheel name="front_right_wheel" diameter="${WHEEL_DIAMETER}" thickness="${WHEEL_THICKNESS}"/>
+    <xacro:wheel name="back_left_wheel" diameter="${WHEEL_DIAMETER}"   thickness="${WHEEL_THICKNESS}"/>
+    <xacro:wheel name="back_right_wheel" diameter="${WHEEL_DIAMETER}"  thickness="${WHEEL_THICKNESS}"/>
+
+	<xacro:laser name="laser" size="${LASER_SIZE}" mass="${LASER_MASS}"/>
+    <!-- End links -->
+
+    <!-- Start joints -->
+    <joint type="fixed" name="laser_joint">
+        <parent link="base_link"/>
+        <child link="laser"/>
+        <origin xyz="0 0 ${BODY_HEIGHT/2 + LASER_SIZE/2 + WHEEL_DIAMETER/2}"/>
+    </joint>
+    
+    <xacro:attach_wheel wheel="front_left_wheel" parent="base_link">
+        <origin xyz="${BODY_LENGTH/2 - WHEEL_DIAMETER/2} ${BODY_WIDTH/2 + WHEEL_THICKNESS/2} 0"/>
+    </xacro:attach_wheel>
+
+    <xacro:attach_wheel wheel="front_right_wheel" parent="base_link">
+        <origin xyz="${BODY_LENGTH/2 - WHEEL_DIAMETER/2} -${BODY_WIDTH/2 + WHEEL_THICKNESS/2} 0"/>
+    </xacro:attach_wheel>
+
+    <xacro:attach_wheel wheel="back_left_wheel" parent="base_link">
+        <origin xyz="-${BODY_LENGTH/2 - WHEEL_DIAMETER/2} ${BODY_WIDTH/2 + WHEEL_THICKNESS/2} 0"/>
+    </xacro:attach_wheel>
+
+    <xacro:attach_wheel wheel="back_right_wheel" parent="base_link">
+        <origin xyz="-${BODY_LENGTH/2 - WHEEL_DIAMETER/2} -${BODY_WIDTH/2 + WHEEL_THICKNESS/2} 0"/>
+    </xacro:attach_wheel>
+    <!-- End joints -->
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        </plugin>
+    </gazebo>
+    
+</robot>
+

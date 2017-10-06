@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <name>capybot_description</name>
+  <version>0.0.0</version>
+  <description>The capybot_description package</description>
+
+  <author email="zach.inbox@gmail.com">Zach Anderson</author>
+  <maintainer email="zach.inbox@gmail.com">Zach Anderson</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>xacro</build_depend>
+
+  <export></export>
+</package>

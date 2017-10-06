@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="diff_drive" default="false"/>
+    <param name="robot_description" textfile="$(find capybot_description)/urdf/capybot.urdf" />
+
+    <rosparam file="$(find capybot_driver)/config/controllers.yaml" command="load"/>
+
+    <node unless="$(arg diff_drive)" name="controller_spawner" pkg="controller_manager" type="spawner"
+          args="front_right_wheel_controller front_left_wheel_controller back_left_wheel_controller back_right_wheel_controller state_controller --shutdown-timeout 1"/>
+
+    <group if="$(arg diff_drive)">
+        <remap from="diff_drive_controller/cmd_vel" to="cmd_vel"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner"
+              args="diff_drive_controller state_controller --shutdown-timeout 1"/>
+    </group>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+</launch>
+

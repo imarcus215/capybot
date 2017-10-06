@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>capybot_launch</name>
+  <version>0.0.0</version>
+  <description>Contains launchfiles for capybot</description>
+
+  <author email="zach.inbox@gmail.com">Zach Anderson</author>
+  <maintainer email="zach.inbox@gmail.com">Zach Anderson</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export></export>
+</package>
