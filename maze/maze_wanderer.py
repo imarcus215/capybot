@@ -3,7 +3,7 @@ from std_msgs.msg import Float64
 from sensor_msgs.msg import LaserScan
 
 def handleNewData(data):
-	print(data)
+	callback(data)
 
 def drive(left, right):
 	flw_pub.publish(left)
@@ -14,12 +14,20 @@ def drive(left, right):
 def callback(data):
 	midpoint = len(data.ranges)/2
 	distance = data.ranges[midpoint]
-	while(distance > 0):
-		if distance < 0.25:
-			sleep(.01)
-			drive(4.0, 4.0)
+	left = len(data.ranges) * (2/3)
+	right = len(data.ranges) * (1/3)
+	leftDistance = data.ranges[left]
+	rightDistance = data.ranges[right]
+	if distance > .4:
+		drive(2, 2)
+	else:
+		if leftDistance < rightDistance:
+			drive(2, -2)
+		elif rightDistance < leftDistance:
+			drive(-2, 2)
 		else:
-			drive(-5.0, -5.0)
+			drive(-2, 2)
+		
 
 
 rospy.init_node("maze")
